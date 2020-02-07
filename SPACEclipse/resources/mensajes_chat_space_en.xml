@@ -1,0 +1,10 @@
+<communication>
+  <message id="space-m1" text="I think that ..." requiresText="true"/>
+  <message id="space-m2" text="Why ..." requiresText="true"/>
+  <message id="space-m3" text="I miss a ..." requiresText="true"/>
+  <message id="space-m4" text="There's a mistake in ..." requiresText="true"/>
+  <message id="space-m5" text="I think so"/>
+  <message id="space-m6" text="I dont't think so"/>
+  <message id="space-m7" text="I don't know"/>
+  <message id="space-m8" text="Because ..." requiresText="true"/>
+</communication>

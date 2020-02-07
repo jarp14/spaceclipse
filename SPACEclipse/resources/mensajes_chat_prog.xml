@@ -1,0 +1,15 @@
+<communication>
+  <message id="prog-m1" text="Pienso que ..." requiresText="true"/>
+  <message id="prog-m2" text="¿Por qué ..." requiresText="true"/>
+  <message id="prog-m3" text="Falta un ..." requiresText="true"/>
+  <message id="prog-m4" text="Veo un fallo en ..." requiresText="true"/>
+  <message id="prog-m5" text="Revisa el anidamiento {}"/>
+  <message id="prog-m6" text="Hay que controlar ..."  requiresText="true"/>
+  <message id="prog-m7" text="En el bucle ..." requiresText="true"/>
+  <message id="prog-m8" text="Corrige de arriba a abajo"/>
+  <message id="prog-m9" text="¿Probamos más casos?"/>
+  <message id="prog-m10" text="Ya funciona"/>
+  <message id="prog-m11" repliesTo="prog-m1" text="No pienso igual"/>
+  <message id="prog-m12" repliesTo="prog-m2" text="Porque ..." requiresText="true"/>
+  
+</communication>
