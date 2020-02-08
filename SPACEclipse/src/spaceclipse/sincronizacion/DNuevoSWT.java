@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Text;
 
 import spaceclipse.util.Agente;
 import spaceclipse.util.Util;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
 
 public class DNuevoSWT extends Dialog {
 	private boolean administrador;
@@ -120,71 +122,71 @@ public class DNuevoSWT extends Dialog {
 	}
 
 	private void createContents() {
-		shell.setLayout(null);
+		shell.setLayout(new GridLayout(3, false));
+		
+				lblSesion1 = new Label(shell,SWT.NULL);
+				lblSesion1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				lblSesion1.setText(parametros.getProperty("etiqLogin"));
+				lblSesion1.setAlignment(SWT.RIGHT);
 
 		txtLogin = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtLogin.setBounds(new Rectangle(81, 13, 150, 21));
+		txtLogin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
+				lblSesion = new Label(shell,SWT.NULL);
+				lblSesion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				lblSesion.setAlignment(SWT.RIGHT);
+				lblSesion.setText(parametros.getProperty("etiqNombre"));
 
 		txtNombre = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtNombre.setBounds(new Rectangle(81, 44, 150, 21));
+		txtNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
+				lblClave = new Label(shell,SWT.NULL);
+				lblClave.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				lblClave.setText(parametros.getProperty("etiqClave"));
+				lblClave.setAlignment(SWT.RIGHT);
 
 		txtClave = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtClave.setBounds(new Rectangle(81, 74, 150, 21));
+		txtClave.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
+				lblFoto = new Label(shell,SWT.NULL);
+				lblFoto.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				lblFoto.setAlignment(SWT.RIGHT);
+				lblFoto.setText(parametros.getProperty("etiqURLFoto"));
 
 		txtFoto = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtFoto.setBounds(new Rectangle(81, 105, 150, 21));
+		txtFoto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		
+				lblIP = new Label(shell,SWT.NULL);
+				lblIP.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				lblIP.setText(parametros.getProperty("etiqIP"));
+				lblIP.setAlignment(SWT.RIGHT);
 
 		txtIP = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtIP.setBounds(new Rectangle(81, 134, 150, 21));
+		txtIP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		txtIP.setText(Util.obtenerIP());
+		
+				cbAdministrador = new Button(shell,SWT.CHECK);
+				cbAdministrador.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
+				cbAdministrador.setText(parametros.getProperty("etiqAdministrador"));
+				
+						cbAdministrador.setEnabled(administrador);
 
 		Button butAceptar = new Button(shell, SWT.PUSH);
+		butAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
 		butAceptar.setText(parametros.getProperty("botAceptar"));
-		butAceptar.setBounds(new Rectangle(8, 194, 87, 22));
 		butAceptar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				butAceptar_SelectionPerformed(e);
 			}
 		});
 		Button butCancelar=new Button(shell, SWT.PUSH);
+		butCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		butCancelar.setText(parametros.getProperty("botCancelar"));
-		butCancelar.setBounds(new Rectangle(146, 195, 87, 22));
 		butCancelar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				butCancelar_SelectionPerformed(e);
 			}
 		});
-
-		lblSesion = new Label(shell,SWT.NULL);
-		lblSesion.setAlignment(SWT.RIGHT);
-		lblSesion.setText(parametros.getProperty("etiqNombre"));
-		lblSesion.setBounds(new Rectangle(6, 43, 64, 22));
-
-		lblClave = new Label(shell,SWT.NULL);
-		lblClave.setBounds(new Rectangle(16, 73, 54, 22));
-		lblClave.setText(parametros.getProperty("etiqClave"));
-		lblClave.setAlignment(SWT.RIGHT);
-
-		lblFoto = new Label(shell,SWT.NULL);
-		lblFoto.setAlignment(SWT.RIGHT);
-		lblFoto.setText(parametros.getProperty("etiqURLFoto"));
-		lblFoto.setBounds(new Rectangle(6, 104, 64, 22));
-
-		lblSesion1 = new Label(shell,SWT.NULL);
-		lblSesion1.setBounds(new Rectangle(6, 12, 64, 22));
-		lblSesion1.setText(parametros.getProperty("etiqLogin"));
-		lblSesion1.setAlignment(SWT.RIGHT);
-
-		lblIP = new Label(shell,SWT.NULL);
-		lblIP.setBounds(new Rectangle(6, 132, 64, 22));
-		lblIP.setText(parametros.getProperty("etiqIP"));
-		lblIP.setAlignment(SWT.RIGHT);
-
-		cbAdministrador = new Button(shell,SWT.CHECK);
-		cbAdministrador.setText(parametros.getProperty("etiqAdministrador"));
-		cbAdministrador.setBounds(new Rectangle(64, 159, 120, 25));
-
-		cbAdministrador.setEnabled(administrador);
 	}
 
 }

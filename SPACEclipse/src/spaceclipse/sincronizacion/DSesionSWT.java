@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Text;
 
 import spaceclipse.util.Agente;
 import spaceclipse.util.Util;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
 
 public class DSesionSWT extends Dialog {
 
@@ -65,27 +67,73 @@ public class DSesionSWT extends Dialog {
 	}
 
 	private void createContents() {
-		shell.setLayout(null);
+		shell.setLayout(new GridLayout(3, false));
 
 		lblSesion = new Label(shell, SWT.NULL);
+		lblSesion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSesion.setAlignment(SWT.RIGHT);
 		lblSesion.setText(param.getProperty("etiqNombreSes"));
-		lblSesion.setBounds(new Rectangle(5, 6, 64, 22));
 
+		txtSesion = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		GridData gd_txtSesion = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		gd_txtSesion.widthHint = 147;
+		txtSesion.setLayoutData(gd_txtSesion);
+		
 		lblSesion1 = new Label(shell,SWT.NULL);
-		lblSesion1.setBounds(new Rectangle(15, 35, 54, 22));
+		lblSesion1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSesion1.setText(param.getProperty("etiqTipoSesion"));
 		lblSesion1.setAlignment(SWT.RIGHT);
 
-		txtSesion = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtSesion.setBounds(new Rectangle(79, 7, 150, 21));
-
 		txtTipo = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtTipo.setBounds(new Rectangle(79, 36, 150, 21));
+		txtTipo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+																						
+		label1 = new Label(shell,SWT.NULL);
+		label1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		label1.setAlignment(SWT.RIGHT);
+		label1.setText(param.getProperty("etiqFichSesion"));
+																				
+		tFichero = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		tFichero.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+																		
+		cbPrivada = new Button(shell,SWT.CHECK);
+		cbPrivada.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
+		cbPrivada.setText(param.getProperty("etiqPrivada"));
+																
+		label2 = new Label(shell,SWT.NULL);
+		label2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
+		label2.setText(param.getProperty("etiqFechaInic"));
+														
+		tFechaInic = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		tFechaInic.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		tFechaInic.setText("01/01/2018");
+												
+		label3 = new Label(shell,SWT.NULL);
+		label3.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
+		label3.setText(param.getProperty("etiqHoraInic"));
+										
+		tHoraInic = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		tHoraInic.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		tHoraInic.setText("00:00:00");
+								
+		label4 = new Label(shell,SWT.NULL);
+		label4.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
+		label4.setText(param.getProperty("etiqFechaFin"));
+						
+		tFechaFin = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		tFechaFin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		tFechaFin.setText("31/12/9999");
+				
+		label5 = new Label(shell,SWT.NULL);
+		label5.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
+		label5.setText(param.getProperty("etiqHoraFin"));
+		
+		tHoraFin = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		tHoraFin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		tHoraFin.setText("23:59:59");
 
 		butAceptar = new Button(shell, SWT.PUSH);
+		butAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
 		butAceptar.setText(param.getProperty("botAceptar"));
-		butAceptar.setBounds(new Rectangle(8, 214, 89, 22));
 		butAceptar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				butAceptar_actionPerformed(e);
@@ -93,57 +141,13 @@ public class DSesionSWT extends Dialog {
 		});
 
 		butCancelar = new Button(shell, SWT.PUSH);
+		butCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		butCancelar.setText(param.getProperty("botCancelar"));
-		butCancelar.setBounds(new Rectangle(137, 214, 89, 22));
 		butCancelar.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
 				butCancelar_actionPerformed(e);
 			}
 		});
-
-		label1 = new Label(shell,SWT.NULL);
-		label1.setAlignment(SWT.RIGHT);
-		label1.setText(param.getProperty("etiqFichSesion"));
-		label1.setBounds(new Rectangle(6, 62, 63, 17));
-
-		tFichero = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		tFichero.setBounds(new Rectangle(79, 58, 150, 21));
-
-		label2 = new Label(shell,SWT.NULL);
-		label2.setText(param.getProperty("etiqFechaInic"));
-		label2.setBounds(14, 111, 116, 14);
-
-		tFechaInic = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		tFechaInic.setText("01/01/2018");
-		tFechaInic.setBounds(new Rectangle(139, 111, 87, 21));
-
-		label3 = new Label(shell,SWT.NULL);
-		label3.setBounds(14, 135, 116, 14);
-		label3.setText(param.getProperty("etiqHoraInic"));
-
-		label4 = new Label(shell,SWT.NULL);
-		label4.setBounds(14, 158, 116, 14);
-		label4.setText(param.getProperty("etiqFechaFin"));
-
-		label5 = new Label(shell,SWT.NULL);
-		label5.setBounds(11, 182, 118, 17);
-		label5.setText(param.getProperty("etiqHoraFin"));
-
-		tFechaFin = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		tFechaFin.setText("31/12/9999");
-		tFechaFin.setBounds(new Rectangle(139, 158, 87, 21));
-
-		tHoraInic = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		tHoraInic.setText("00:00:00");
-		tHoraInic.setBounds(new Rectangle(139, 135, 87, 21));
-
-		tHoraFin = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		tHoraFin.setText("23:59:59");
-		tHoraFin.setBounds(new Rectangle(139, 182, 87, 21));
-
-		cbPrivada = new Button(shell,SWT.CHECK);
-		cbPrivada.setText(param.getProperty("etiqPrivada"));
-		cbPrivada.setBounds(new Rectangle(64, 81, 83, 25));
 		// Si no es administrador, no se puede cambiar sesion privada/publica
 		if (!administrador)
 			cbPrivada.setEnabled(false);

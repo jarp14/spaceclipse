@@ -55,23 +55,17 @@ public class FConectarSWT extends Dialog {
 	public FConectarSWT(Shell parent, int style, IAplicacion aplicacion, String hostArg, String idioma) {
 		super(parent, style);
 		this.aplicacion = aplicacion;
-		shell = parent;			
+		this.shell = parent;	
 		this.idioma = idioma;
-		this.hostArg = hostArg;   
+		this.hostArg = hostArg;  
 	}
 
-	public void open() throws Exception{
+	public void open() throws Exception {
 		Shell shell = new Shell(getParent(), SWT.DIALOG_TRIM);
-		shell.setSize(750, 340);
+		shell.setSize(388, 194);
 		shell.setText(getText());
 		createContents(shell);
 		Display display = getParent().getDisplay();
-		//Monitor primary = display.getPrimaryMonitor();
-		//Rectangle bounds = primary.getBounds();
-		//Rectangle rect = shell.getBounds();
-		//int x = bounds.x + (bounds.width-rect.width)/2;
-		//int y = bounds.y + (bounds.height-rect.height)/2;
-		//shell.setLocation(x, y);
 		shell.pack();
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -84,7 +78,6 @@ public class FConectarSWT extends Dialog {
 		shell.setLayout(null);  
 		shell.setEnabled(true);
 		shell.setText("Login");
-		shell.setBounds(120, 120, 230, 200);
 
 		// Apertura fichero de propiedades
 		parametros = abrirFicheroParametros(idioma);
@@ -94,15 +87,15 @@ public class FConectarSWT extends Dialog {
 		lblLogin.setText(parametros.getProperty("etiqLogin"));
 		lblLogin.setBounds(new Rectangle(5, 20, 70, 20));
 		txtLogin = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		txtLogin.setBounds(new Rectangle(75, 20, 160, 20));
+		txtLogin.setBounds(new Rectangle(76, 20, 166, 20));
 
 		lblClave = new Label(shell,SWT.NULL);
 		lblClave.setAlignment(SWT.RIGHT);
 		lblClave.setText(parametros.getProperty("etiqClave"));
-		lblClave.setBounds(new Rectangle(6, 53, 70, 30));
+		lblClave.setBounds(new Rectangle(5, 52, 70, 20));
 		txtClave = new Text(shell, SWT.SINGLE | SWT.BORDER );
 		txtClave.setEchoChar('*');
-		txtClave.setBounds(76, 53, 160, 20);
+		txtClave.setBounds(76, 52, 166, 20);
 
 		cbServSpace = new Button(shell, SWT.RADIO);
 		cbServSpace.setText(parametros.getProperty("etiqServidor"));
@@ -115,24 +108,24 @@ public class FConectarSWT extends Dialog {
 		cbServOtro.setSelection(false);	    
 		txtServidor = new Text(shell, SWT.SINGLE | SWT.BORDER);
 		txtServidor.setText(Util.obtenerIP());
-		txtServidor.setBounds(112,113,132,20);
+		txtServidor.setBounds(112,113,130,20);
 		txtServidor.addMouseListener((MouseListener) new FConectar_txtServidor_mouseListener(this));
 		txtServidor.addModifyListener(new FConectar_txtServidor_text(this));
 		txtServidor.addSelectionListener((SelectionListener) new FConectar_txtServidor_SelectionAdapter(this));
 
-		butConectar = new Button(shell, SWT.PUSH);
+		butConectar = new Button(shell, SWT.CENTER);
 		butConectar.setText(parametros.getProperty("botConectar"));
-		butConectar.setBounds(5, 147, 85, 25);
+		butConectar.setBounds(10, 147, 85, 25);
 		butConectar.addSelectionListener(new FConectar_butConectar_SelectionListener(this));
 
-		butNuevo = new Button(shell, SWT.PUSH);
-		butNuevo.setBounds(new Rectangle(90, 147, 75, 25));
+		butNuevo = new Button(shell, SWT.CENTER);
+		butNuevo.setBounds(new Rectangle(100, 147, 75, 25));
 		butNuevo.addSelectionListener(new FConectar_butNuevo_SelectioListener(this));
 		butNuevo.setText(parametros.getProperty("botNuevo"));
 
-		butEliminar = new Button(shell, SWT.PUSH);
+		butEliminar = new Button(shell, SWT.CENTER);
 		butEliminar.setText(parametros.getProperty("botEliminar"));
-		butEliminar.setBounds(new Rectangle(164, 147, 75, 25));
+		butEliminar.setBounds(new Rectangle(180, 147, 75, 25));
 		butEliminar.addSelectionListener(new FConectar_butEliminar_selectionAdapter(this));
 
 		shell.addListener(SWT.Close, new FConectar_this_windowListener(this));
@@ -216,7 +209,7 @@ public class FConectarSWT extends Dialog {
 		byte esAdmin = esAdministrador(txtLogin.getText(), txtClave.getText());
 
 		if (esAdmin == ConstAdmin.US_ES_ADMIN || esAdmin == ConstAdmin.US_ENCONTRADO_NO_ADMIN) {
-			FSesionSWT sesion = new FSesionSWT(new Shell(),aplicacion,servidor,txtLogin.getText(),esAdmin, parametros);
+			FSesionSWT sesion = new FSesionSWT(new Shell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL,aplicacion,servidor,txtLogin.getText(),esAdmin, parametros);
 			cerrar();
 			sesion.open();
 		} else

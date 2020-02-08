@@ -9,10 +9,13 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
 
 public class DMensajesSWT extends Dialog {
 
 	private String message;
+	private Shell shell1;
 
 	public DMensajesSWT(Shell parent) {
 		this(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
@@ -37,13 +40,14 @@ public class DMensajesSWT extends Dialog {
 	}
 
 	public void open() {
-		Shell shell = new Shell(getParent(), getStyle());
-		shell.setText(getText());
-		createContents(shell);
-		shell.pack();
-		shell.open();
+		shell1 = new Shell(getParent(), getStyle());
+		shell1.setSize(246, 184);
+		shell1.setText(getText());
+		createContents(shell1);
+		shell1.pack();
+		shell1.open();
 		Display display = getParent().getDisplay();
-		while (!shell.isDisposed()) {
+		while (!shell1.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -51,16 +55,17 @@ public class DMensajesSWT extends Dialog {
 	}
 
 	private void createContents(final Shell shell) {
-		shell.setLayout(null);
+		shell1.setLayout(new GridLayout(1, false));
 
-		Text textArea = new Text(shell, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY);
+		Text textArea = new Text(shell, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.CENTER | SWT.MULTI);
+		textArea.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		textArea.setText(message);
-		textArea.setBounds(new Rectangle(5, 6, 228, 114));
 
 		Button ok = new Button(shell, SWT.PUSH);
+		ok.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		ok.setText("OK");
-		ok.setBounds(new Rectangle(74, 127, 90, 24));
 		ok.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent event) {
 				shell.close();
 			}

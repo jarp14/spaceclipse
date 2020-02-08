@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name.0
-Bundle-SymbolicName: SPACEclipse; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-SymbolicName: SpacEclipse;singleton:=true
+Bundle-Version: 1.0.0.SNAPSHOT
 Bundle-Activator: spaceclipse.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide;bundle-version="3.12.3",
@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: mysql-connector-java-3.1.11-bin.jar,
- .
+ .,
+ swing2swt.jar
 Export-Package: com.mysql.jdbc,
  com.mysql.jdbc.configs,
  com.mysql.jdbc.integration.c3p0,

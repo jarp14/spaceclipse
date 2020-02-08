@@ -10,6 +10,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -22,7 +23,7 @@ import spaceclipse.herramientas.IAplicacion;
 import spaceclipse.util.Agente;
 import spaceclipse.util.Util;
 
-public class FSesionSWT {
+public class FSesionSWT extends Dialog {
 
 	private IAplicacion aplicacion;
 	private String host;
@@ -46,8 +47,9 @@ public class FSesionSWT {
 	private Text tUsuario;
 	private Text tUsuarioAnad;
 
-	public FSesionSWT(Shell s,IAplicacion aplicacion, String host, String usuario, byte esAdmin,Properties param){
-		shell = s;
+	public FSesionSWT(Shell parent, int style, IAplicacion aplicacion, String host, String usuario, byte esAdmin,Properties param){
+		super(parent, style);
+		this.shell = parent;
 		this.param = param;
 		this.aplicacion = aplicacion;
 		this.host = host;
@@ -56,9 +58,10 @@ public class FSesionSWT {
 	}
 
 	public void open() {
+		shell = new Shell(getParent(), SWT.DIALOG_TRIM);
 		createContents();
 		shell.pack();
-		shell.setBounds(0, 0, 270, 350);
+		shell.setBounds(0, 0, 600, 400);
 		shell.open();
 		Display display = shell.getDisplay();
 		while (!shell.isDisposed()) {
@@ -74,65 +77,65 @@ public class FSesionSWT {
 		shell.addListener(SWT.Close, new FSesion_this_windowListener(this));
 
 		lstSesiones = new List(shell,SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		lstSesiones.setBounds(new Rectangle(4, 69, 230, 96));
+		lstSesiones.setBounds(new Rectangle(6, 69, 588, 96));
 		lstSesiones.addSelectionListener(new FSesion_lstSesiones_selecctionAdapter(this));
 
 		lstParticipantes = new List(shell,SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		lstParticipantes.setBounds(new Rectangle(4, 205, 125, 67));
+		lstParticipantes.setBounds(new Rectangle(6, 240, 270, 80));
 
 		lstMiembros = new List(shell,SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		lstMiembros.setBounds(new Rectangle(134, 205, 100, 67));
+		lstMiembros.setBounds(new Rectangle(324, 240, 270, 80));
 
 		lblNombreSes = new Label(shell,SWT.NULL);
 		lblNombreSes.setText(param.getProperty("etiqCabSesiones"));
-		lblNombreSes.setBounds(new Rectangle(4, 51, 225, 20));
+		lblNombreSes.setBounds(new Rectangle(6, 47, 588, 20));
 
-		butNuevaSesion = new Button(shell, SWT.PUSH);
+		butNuevaSesion = new Button(shell, SWT.CENTER);
 		butNuevaSesion.setText(param.getProperty("botNueva"));
-		butNuevaSesion.setBounds(new Rectangle(4, 168, 45, 20));
+		butNuevaSesion.setBounds(new Rectangle(6, 176, 100, 24));
 		butNuevaSesion.addSelectionListener(new FSesion_butNuevaSesion_selectionAdapter(this));
 
-		butEliminarSesion = new Button(shell, SWT.PUSH);
-		butEliminarSesion.setBounds(new Rectangle(53, 168, 59, 20));
+		butEliminarSesion = new Button(shell, SWT.CENTER);
+		butEliminarSesion.setBounds(new Rectangle(126, 176, 100, 24));
 		butEliminarSesion.addSelectionListener(new FSesion_butEliminarSesion_selectionAdapter(this));
 		butEliminarSesion.setText(param.getProperty("botEliminar"));
 
-		butEliminarParticipante = new Button(shell, SWT.PUSH);
+		butEliminarParticipante = new Button(shell, SWT.CENTER);
 		butEliminarParticipante.setText(param.getProperty("botDesconectar"));
-		butEliminarParticipante.setBounds(new Rectangle(4, 274, 76, 20));
+		butEliminarParticipante.setBounds(new Rectangle(6, 334, 100, 24));
 		butEliminarParticipante.addSelectionListener(new FSesion_butEliminarParticipante_selectionAdapter(this));
 
-		butAccederSesion = new Button(shell, SWT.PUSH);
-		butAccederSesion.setBounds(new Rectangle(180, 168, 54, 20));
+		butAccederSesion = new Button(shell, SWT.CENTER);
+		butAccederSesion.setBounds(new Rectangle(366, 176, 100, 24));
 		butAccederSesion.addSelectionListener(new FSesion_butAccederSesion_selectionAdapter(this));
 		butAccederSesion.setText(param.getProperty("botAcceder"));
 
-		butActualizar = new Button(shell, SWT.PUSH);
+		butActualizar = new Button(shell, SWT.CENTER);
 		butActualizar.setText(param.getProperty("botActualizar"));
-		butActualizar.setBounds(new Rectangle(115, 168, 61, 20));
+		butActualizar.setBounds(new Rectangle(246, 176, 100, 24));
 		butActualizar.addSelectionListener(new FSesion_butActualizar_selectionAdapter(this));
 
-		label1 = new Label(shell,SWT.NULL);
+		label1 = new Label(shell,SWT.RIGHT);
 		label1.setText(param.getProperty("etiqUsuario"));
-		label1.setBounds(new Rectangle(81, 33, 51, 17));
+		label1.setBounds(new Rectangle(296, 20, 116, 17));
 
 		tUsuario = new Text(shell,SWT.SINGLE | SWT.BORDER);
 		tUsuario.setText(usuario);
 		tUsuario.setEditable(false);
 		tUsuario.setEnabled(false);
-		tUsuario.setBounds(new Rectangle(142, 32, 92, 18));
+		tUsuario.setBounds(new Rectangle(421, 20, 173, 18));
 
 		label2 = new Label(shell,SWT.NULL);
 		label2.setText(param.getProperty("etiqMiembros"));
-		label2.setBounds(new Rectangle(134, 190, 76, 16));
+		label2.setBounds(new Rectangle(324, 216, 270, 20));
 
-		butAnadir = new Button(shell, SWT.PUSH);
+		butAnadir = new Button(shell, SWT.CENTER);
 		butAnadir.setText(param.getProperty("botAnadir"));
-		butAnadir.setBounds(new Rectangle(188, 275, 46, 21));
+		butAnadir.setBounds(new Rectangle(495, 334, 100, 24));
 		butAnadir.addSelectionListener(new FSesion_butUsuarioAnad_selectionAdapter(this));
 
 		tUsuarioAnad = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		tUsuarioAnad.setBounds(new Rectangle(134, 276, 51, 18));
+		tUsuarioAnad.setBounds(new Rectangle(324, 334, 148, 20));
 
 		// Si no se es administrador, no se pueden crear ni eliminar sesiones,
 		// Ni tampoco añadir usuarios, aunque si desconectar
@@ -489,7 +492,7 @@ public class FSesionSWT {
 
 	private void nuevaSesion() {
 		boolean administrador = (esAdmin==ConstAdmin.US_ES_ADMIN);
-		new DSesionSWT(new Shell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL,"Nueva Sesi�n",true,usuario,administrador,param).open();
+		new DSesionSWT(new Shell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL,"New Session",true,usuario,administrador,param).open();
 		leerSesiones();
 	}
 
