@@ -2,6 +2,7 @@ package spaceclipse.herramientas;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class MensajeChat extends Mensaje {
 	String mensajeId;
 	String textoAdic;
@@ -12,8 +13,8 @@ public class MensajeChat extends Mensaje {
 		textoAdic = "";
 	}
 
-	public void setMensajeId(String mi) { mensajeId=mi; }
-	public void setTextoAdic(String ta) { textoAdic=ta; }
+	public void setMensajeId(String mi) { mensajeId = mi; }
+	public void setTextoAdic(String ta) { textoAdic = ta; }
 
 	public String getMensajeId() { return mensajeId; }
 	public String getTextoAdic() { return textoAdic; }

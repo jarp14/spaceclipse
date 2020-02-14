@@ -2,6 +2,7 @@ package spaceclipse.herramientas;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class MensajeTexto extends Mensaje {
 	private String texto;
 

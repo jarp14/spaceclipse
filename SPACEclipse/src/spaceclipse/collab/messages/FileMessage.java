@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class FileMessage extends Mensaje implements Serializable {
 
 	char[] fichero;
@@ -12,7 +13,6 @@ public class FileMessage extends Mensaje implements Serializable {
 	public FileMessage(short tipo, String sender) {
 		super(tipo, sender);
 	}
-
 
 	public String getRutaFichero() {
 		return rutaFichero;

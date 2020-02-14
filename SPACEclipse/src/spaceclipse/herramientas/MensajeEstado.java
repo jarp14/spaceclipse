@@ -2,6 +2,7 @@ package spaceclipse.herramientas;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class MensajeEstado extends Mensaje {
 	String usuarioEstado;
 	String estado;

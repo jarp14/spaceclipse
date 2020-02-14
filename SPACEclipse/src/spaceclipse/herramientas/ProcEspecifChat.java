@@ -12,7 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ProcEspecifChat extends DefaultHandler {
 	String fich;
 	SAXParser parser = null;
-	Vector mensajes = new Vector(6,4);
+	Vector mensajes = new Vector(6, 4);
   
 	public ProcEspecifChat(String fichEspecif) {
 		fich = fichEspecif;
@@ -33,7 +33,10 @@ public class ProcEspecifChat extends DefaultHandler {
 	}
   
 	public void startElement (String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		String id, resp, texto, req;
+		String id;
+		String resp;
+		String texto;
+		String req;
 		boolean reqText;
 
 		if (qName.equals("message")) {
@@ -44,7 +47,7 @@ public class ProcEspecifChat extends DefaultHandler {
 			if (req != null)
 				reqText = req.equals("true") ? true : false;
 			resp = attributes.getValue("repliesTo");
-			ChatEstrMensaje mens = new ChatEstrMensaje(id,texto,resp,reqText);
+			ChatEstrMensaje mens = new ChatEstrMensaje(id, texto, resp, reqText);
 			mensajes.addElement(mens);
 		}
 	}

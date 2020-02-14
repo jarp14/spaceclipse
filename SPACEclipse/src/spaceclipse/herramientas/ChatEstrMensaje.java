@@ -4,7 +4,8 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 class ChatEstrMensaje {
-	private String mensajeId, texto;
+	private String mensajeId;
+	private String texto;
 	private Vector respondeA;
 	private boolean requiereTexto;
 	
@@ -13,7 +14,7 @@ class ChatEstrMensaje {
 		this.texto = texto;
 		respondeA = new Vector(2,2);
 		if (resp != null) {
-			StringTokenizer st = new StringTokenizer(resp,",");
+			StringTokenizer st = new StringTokenizer(resp, ",");
 			while(st.hasMoreTokens()) {
 				respondeA.addElement(st);
 				st.nextToken();

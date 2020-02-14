@@ -2,6 +2,7 @@ package spaceclipse.herramientas;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class MensajeColorUsuarios extends Mensaje {
 	private String usuarios[];
 	private byte colores[];

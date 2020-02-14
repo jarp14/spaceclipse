@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class ModelMessage extends Mensaje implements Serializable {
 
-	// JGA 27/07/2009 Hereda de Mensaje para integrar con SPACEclipse
 	public ModelMessage(short tipo, String sender) {
 		super(tipo, sender);
 	}
@@ -14,7 +14,6 @@ public class ModelMessage extends Mensaje implements Serializable {
 	char[] archivoModelo;
 	char[] archivoDiagrama;
 	
-	//TODO: Ver si realmente hacen falta las rutas
 	String rutaArchivoModelo;
 	String rutaArchivoDiagrama;
 	

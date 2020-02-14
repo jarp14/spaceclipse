@@ -31,39 +31,39 @@ import spaceclipse.util.Agente;
 import spaceclipse.util.Util;
 
 public class PanelSesion extends ViewPart implements ICliente {
-	public final static String ID = "SPACEclipse.panelSesion";
+	public static final String ID = "SPACEclipse.panelSesion";
 
-	private int alto, ancho;
+	private int alto;
+	private int ancho;
 	private boolean grande=true;
 	private boolean vertical=true;
-	private int wFoto, hFoto;
+	private int wFoto; 
+	private int hFoto;
 	private Vector<UsuarioPanel> tabUsuarios;
-	private Color colores[] = {Colores.azul1,Colores.magenta2,Colores.gray3,Colores.red4,Colores.orange5};
-	private boolean asigColores[] = {false,false,false,false,false};
+	private Color colores[] = {Colores.AZUL, Colores.MAGENTA, Colores.GRIS, Colores.ROJO, Colores.NARANJA};
+	private boolean asigColores[] = {false, false, false, false, false};
 	private boolean pitar = true;
 
-	private final String canalLocal = "panel";
+	private static final String CANAL_LOCAL = "panel";
 	private SpaceClienteCanal clienteCanal = null;
 	private String usuario;
 	private int usuarios;
 
 	private Canvas canvas;
-	private UsuarioPanel usPanC, usPanJ, usPanR;
-	private Image im, imC, imJ, imR;
+	private Image im;
 
 	public void iniciarConexion(SpaceClient cliente, String usuario) {
-		clienteCanal = new SpaceClienteCanal(this,cliente,canalLocal);
+		this.clienteCanal = new SpaceClienteCanal(this, cliente, CANAL_LOCAL);
 		this.usuario = usuario;
 
 		usuarios = clienteCanal.getParticipantes();
 
-		if (usuarios == 1) { //Es el primero
+		if (usuarios == 1) { // Es el primero
 			byte colorAsig = obtenerColor();
-			UsuarioPanel usPan = crearUsuario(usuario,colorAsig);
+			UsuarioPanel usPan = crearUsuario(usuario, colorAsig);
 			tabUsuarios.add(usPan);
-		} else {
-			// Comunicar entrada a los demas para que actualicen
-			Mensaje m = new Mensaje(ConstPanel.MSJ_PANEL_ENTRAR,usuario);
+		} else { // Comunicar entrada a los demas para que actualicen
+			Mensaje m = new Mensaje(ConstPanel.MSJ_PANEL_ENTRAR, usuario);
 			clienteCanal.enviar(m);
 		}
 		canvas.redraw();
@@ -71,7 +71,7 @@ public class PanelSesion extends ViewPart implements ICliente {
 	}
 	
 	public void enviarConfirmacion() {
-		Mensaje m = new Mensaje(ConstPanel.MSJ_PANEL_CONFIRMACION,usuario);
+		Mensaje m = new Mensaje(ConstPanel.MSJ_PANEL_CONFIRMACION, usuario);
 		clienteCanal.enviar(m);
 	}
 
@@ -100,67 +100,76 @@ public class PanelSesion extends ViewPart implements ICliente {
 		canvas.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				// Lo del paint de la otra
 				int i;
 				UsuarioPanel usPan;
 				Color color;
 
 				for (i=0; i<tabUsuarios.size(); i++) {
-					usPan = (UsuarioPanel)tabUsuarios.get(i);
+					usPan = tabUsuarios.get(i);
 					// Buscar color del usuario
 					if (usPan != null) {
-						if (usPan.getColor() == -1)
+						if (usPan.getColor() == -1) {
 							color = new Color(null,new RGB(0,0,0));
-						else
+						} else {
 							color = colores[usPan.getColor()];
+						}
 						e.gc.setForeground(color);
-						// dibuja nombre...
-						if (!grande) { // panel pequeñito (nombre debajo de la foto)
-							//Sino es grande, no se dibujan las etiquetas de los dos estados
-							if (vertical)
-								e.gc.drawString(usPan.getNombre(),2,alto/5*i+2+hFoto); //+6 es la altura del texto
-							else
-								e.gc.drawString(usPan.getNombre(),(ancho/5)*i+2,2+hFoto);
-
-						} else { // panel grande (nombre y estado a la derecha de la foto)
-							if (vertical)
-								e.gc.drawString(usPan.getNombre(),1+wFoto+2,(alto/5)*i+2+4); //+10 es la altura del texto
-							else
-								e.gc.drawString(usPan.getNombre(),(ancho/5)*i+2,2+hFoto+4);
-
+						
+						// Dibuja nombre...
+						if (!grande) { // Panel pequeño (nombre debajo de la foto)
+							// Si no es grande, no se dibujan las etiquetas de los dos estados
+							if (vertical) {
+								e.gc.drawString(usPan.getNombre(), 2, alto/5*i+2+hFoto);
+							} else {
+								e.gc.drawString(usPan.getNombre(), (ancho/5)*i+2, 2+hFoto);
+							}
+						} else { // Panel grande (nombre y estado a la derecha de la foto)
+							if (vertical) {
+								e.gc.drawString(usPan.getNombre(), 1+wFoto+2, (alto/5)*i+2+4);
+							} else {
+								e.gc.drawString(usPan.getNombre(), (ancho/5)*i+2, 2+hFoto+4);
+							}
+							
 							// Estado Global
-							String estadoglobal=usPan.getEstadoGlobal(); 
-							// Estadoglobal="Use Cases";
-							if (estadoglobal != null)
-								if (vertical)
-									e.gc.drawString(estadoglobal,1+wFoto+2,(alto/5)*i+2+20);
-								else
-									e.gc.drawString(estadoglobal,(ancho/5)*i+2,2+hFoto+20);
-
-							//estado Particular
+							String estadoglobal = usPan.getEstadoGlobal(); 
+							// estadoglobal = "Use Cases"; // Para probar
+							if (estadoglobal != null) {
+								if (vertical) {
+									e.gc.drawString(estadoglobal, 1+wFoto+2, (alto/5)*i+2+20);
+								} else {
+									e.gc.drawString(estadoglobal, (ancho/5)*i+2, 2+hFoto+20);
+								}
+							}
+							
+							// Estado particular
 							String estado = usPan.getEstado();
 							//if (i==0)
-							//	estado="Editing"; //para probar
-							if (estado != null)
-								if (vertical)
-									e.gc.drawString(estado,1+wFoto+2,(alto/5)*i+2+34);
-								else
-									e.gc.drawString(estado,(ancho/5)*i+2,2+hFoto+34);
+							//	estado = "Editing"; // Para probar
+							if (estado != null) {
+								if (vertical) {
+									e.gc.drawString(estado, 1+wFoto+2, (alto/5)*i+2+34);
+								} else {
+									e.gc.drawString(estado, (ancho/5)*i+2, 2+hFoto+34);
+								}
+							}
 
 						}
-						// ...foto
+						
+						// Foto
 						im = usPan.getFoto();
 						if (im != null){
-							e.gc.drawImage(new Image(Display.getCurrent(),im.getImageData().scaledTo(wFoto,hFoto)),(vertical?2:(ancho/5)*i+1),(vertical?(alto/5)*i+2:1));
+							e.gc.drawImage(new Image(Display.getCurrent(), im.getImageData().scaledTo(wFoto,hFoto)), (vertical?2:(ancho/5)*i+1), (vertical?(alto/5)*i+2:1));
 						} else {
 							System.out.println("NO COGE LA FOTO");
 						}
-						// ...marco del usuario actual
-						if (usuario.equals(usPan.getNombre()))
-							if (!vertical) // panel horizontal
-								e.gc.drawRectangle((ancho/5)*i+1,1,ancho/5-1,alto-3);
-							else // panel vertical
-								e.gc.drawRectangle(1,(alto/5)*i+1,ancho-3,alto/5-1);
+						// Marco del usuario actual
+						if (usuario.equals(usPan.getNombre())) {
+							if (!vertical) { // Panel horizontal
+								e.gc.drawRectangle((ancho/5)*i+1, 1, ancho/5-1, alto-3);
+							} else { // Panel vertical
+								e.gc.drawRectangle(1, (alto/5)*i+1, ancho-3, alto/5-1);
+							}
+						}
 					} 
 				}
 			}
@@ -189,7 +198,7 @@ public class PanelSesion extends ViewPart implements ICliente {
 		});	    
 	}    
 
-	public void salir(){
+	public void salir() {
 		cerrar();
 	}
 
@@ -198,25 +207,27 @@ public class PanelSesion extends ViewPart implements ICliente {
 
 	public void asignarColorUsuario(String nombre) {
 		int i;
-		boolean enc=false, primeroLista=false;
+		boolean enc = false;
+		boolean primeroLista = false;
 		byte colorAsig = -1;
 		UsuarioPanel usPan;
 
-		// Soy el primero de la lista con color asignado?; soy el que asigna
+		// Soy el primero de la lista con color asignado, soy el que asigna
 		for (i=0; i<tabUsuarios.size() && !enc && !primeroLista; i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
+			usPan = tabUsuarios.get(i);
 			if (usPan != null) {
 				primeroLista = true;
 				if (usPan.getNombre().equals(usuario))
 					enc = true;
 			}
 		}
+		
 		if (primeroLista && enc) {
 			// Construir las estructuras de datos para enviar los colores
 			String us[] = new String[tabUsuarios.size()+1];
 			byte col[] = new byte[tabUsuarios.size()+1];
 			for (i=0; i<tabUsuarios.size(); i++) {
-				usPan = (UsuarioPanel)tabUsuarios.get(i);
+				usPan = tabUsuarios.get(i);
 				us[i] = usPan.getNombre();
 				col[i] = usPan.getColor();
 			}
@@ -224,18 +235,16 @@ public class PanelSesion extends ViewPart implements ICliente {
 			// Para el nuevo usuario
 			colorAsig = obtenerColor();
 			usPan = crearUsuario(nombre, colorAsig);
-
 			us[tabUsuarios.size()] = usPan.getNombre();
 			col[tabUsuarios.size()] = usPan.getColor();
-
 			tabUsuarios.add(usPan);
 
 			// Enviar los colores
-			MensajeColorUsuarios mcu = new MensajeColorUsuarios(ConstPanel.MSJ_PANEL_ACT_COLOR,usuario);
+			MensajeColorUsuarios mcu = new MensajeColorUsuarios(ConstPanel.MSJ_PANEL_ACT_COLOR, usuario);
 			mcu.setUsuarios(us);
 			mcu.setColores(col);
 			clienteCanal.enviar(mcu);
-			// Dibujar panel
+			
 			canvas.redraw();
 		}
 	}
@@ -244,64 +253,69 @@ public class PanelSesion extends ViewPart implements ICliente {
 		byte colorAsig = -1;
 		boolean enc = false;
 
-		for(int j=0; j<colores.length && !enc; j++)
-			if(!asigColores[j]) {
+		for (int j=0; j<colores.length && !enc; j++) {
+			if (!asigColores[j]) {
 				enc = true;
 				asigColores[j] = true;
 				colorAsig = (byte)j;
 			}
+		}
+		
 		return colorAsig;
 	}
 
 	public void procesarMensaje(Mensaje m) {
-		String quienEnvia=m.getSender();
+		String quienEnvia = m.getSender();
 		try {
-			switch(m.getTipo()) {
-			case ConstPanel.MSJ_PANEL_ENTRAR:
-				// Alguien entra
-				// Un unico usuario calcula el color del nuevo usuario y lo comunica a todos
-				asignarColorUsuario(m.getSender());
-				break;
-			case ConstPanel.MSJ_PANEL_ACT_COLOR:
-				actualizar((MensajeColorUsuarios)m);
-				if (pitar && !quienEnvia.equals(usuario))
-					Util.pitido();
-				break;
-			case ConstPanel.MSJ_PANEL_SALIR:
-				quitarUsuario(((MensajePanel)m).getUsuario());
-				if (pitar && !quienEnvia.equals(usuario))
-					Util.pitido();
-				break;
-			case ConstPanel.MSJ_ESTADO_USUARIO: {
-				MensajeEstado me = (MensajeEstado)m;
-				procesarEstado(me.getUsuarioEstado(),me.getEstado(),me.getBorrarOtros());
-				break;
-			}
-			case ConstPanel.MSJ_ESTADOGLOBAL_USUARIO: {
-				MensajeEstado me = (MensajeEstado)m;
-				procesarEstadoGlobalTodos(me.getEstado());
-				//procesarEstadoGlobal(me.getUsuarioEstado(),me.getEstado(),me.getBorrarOtros());
-				break;
-			}
-			case ConstPanel.MSJ_ESTADO_TODOS: {
-				MensajeEstadoTodos met=(MensajeEstadoTodos)m;
-				procesarEstadoTodos(met.getEstado());
-				break;
-			}
-			case ConstPanel.MSJ_PANEL_INICIO:{
-				enviarConfirmacion();
-				break;
-			}
-			case ConstPanel.MSJ_PANEL_CONFIRMACION:{
-				usuarios++;
-				break;
-			}
+			switch (m.getTipo()) {
+				case ConstPanel.MSJ_PANEL_ENTRAR:
+					// Alguien entra
+					// Un unico usuario calcula el color del nuevo usuario y lo comunica a todos
+					asignarColorUsuario(m.getSender());
+					break;
+				case ConstPanel.MSJ_PANEL_ACT_COLOR:
+					actualizar((MensajeColorUsuarios)m);
+					if (pitar && !quienEnvia.equals(usuario))
+						Util.pitido();
+					break;
+				case ConstPanel.MSJ_PANEL_SALIR:
+					quitarUsuario(((MensajePanel)m).getUsuario());
+					if (pitar && !quienEnvia.equals(usuario))
+						Util.pitido();
+					break;
+				case ConstPanel.MSJ_ESTADO_USUARIO: {
+					MensajeEstado me = (MensajeEstado)m;
+					procesarEstado(me.getUsuarioEstado(), me.getEstado(), me.getBorrarOtros());
+					break;
+				}
+				case ConstPanel.MSJ_ESTADOGLOBAL_USUARIO: {
+					MensajeEstado me = (MensajeEstado)m;
+					//procesarEstadoGlobalTodos(me.getEstado());
+					procesarEstadoGlobal(me.getUsuarioEstado(), me.getEstado(), me.getBorrarOtros());
+					break;
+				}
+				case ConstPanel.MSJ_ESTADO_TODOS: {
+					MensajeEstadoTodos met=(MensajeEstadoTodos)m;
+					procesarEstadoTodos(met.getEstado());
+					break;
+				}
+				case ConstPanel.MSJ_PANEL_INICIO: {
+					enviarConfirmacion();
+					break;
+				}
+				case ConstPanel.MSJ_PANEL_CONFIRMACION: {
+					usuarios++;
+					break;
+				}
+				default:
+					break;
 			}
 		} catch(Exception e) {
 			System.err.println("Error Panel (recibir datos): "+e.toString());
 			e.printStackTrace();
 		}
 	}
+	
 	// actualiza la tabla hash de usuarios para reflejar los usuarios de la sesion,
 	// incluyendo los colores, calculados por el emisor
 	public void actualizar(MensajeColorUsuarios mcu) {
@@ -333,94 +347,98 @@ public class PanelSesion extends ViewPart implements ICliente {
 	}
 
 	private void quitarUsuario(String usuario) {
-		int i, n=0, j=0;
+		int i;
 		boolean enc = false;
-
-		UsuarioPanel usPan,usBorr = null;
-		for (i=0; i<tabUsuarios.size() && !enc;i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
+		UsuarioPanel usPan = null;
+		UsuarioPanel usBorr = null;
+		
+		for (i=0; i<tabUsuarios.size() && !enc; i++) {
+			usPan = tabUsuarios.get(i);
 			if(usPan.getNombre().equals(usuario)){
 				enc = true;
 				usBorr = usPan;
 			}
 		}
+		
 		if (enc) {
 			tabUsuarios.remove(usBorr);
 		}
 
-		// dejar libre el color del que se ha marchado (repasando la tabla hash)
+		// Dejar libre el color del que se ha marchado (repasando la tabla hash)
 		for (i=0; i<asigColores.length; i++)
-			asigColores[i]=false;
+			asigColores[i] = false;
 		for (i=0; i<tabUsuarios.size(); i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
+			usPan = tabUsuarios.get(i);
 			if (usPan != null)
-				asigColores[usPan.getColor()]=true;
+				asigColores[usPan.getColor()] = true;
 		}
 		canvas.redraw();
 	}
 	
 	public UsuarioPanel crearUsuario(String nombUsuario, byte color) {
 		UsuarioPanel usuario;
-		String sql,urlFoto=null;
+		String sql = null;
+		String urlFoto = null;
 		PreparedStatement ps;
 		ResultSet rs;
 		//int i;
-		//boolean enc=false;
-		//byte colorAsig=-1;
+		//boolean enc = false;
+		//byte colorAsig = -1;
 
-		// buscar foto
+		// Buscar foto
 		try {
-			sql="select foto from usuarios where id=?";
-			ps=Agente.getBD().prepSentencia(sql);
+			sql = "select foto from usuarios where id=?";
+			ps = Agente.getBD().prepSentencia(sql);
 			ps.setString(1, nombUsuario);
-			rs=Agente.getBD().ejecutarSelect(ps);
-			if(rs.next())
-				urlFoto=rs.getString("foto");
+			rs = Agente.getBD().ejecutarSelect(ps);
+			if (rs.next())
+				urlFoto = rs.getString("foto");
 			Agente.getBD().cerrarSentencia(rs, ps);
 		} catch(Exception e) {
 			System.err.println("Error Panel (crear usuario): "+e.toString());
 		}
 		System.out.println("RUTA: "+urlFoto);
-		// crear usuario
-		usuario=new UsuarioPanel(urlFoto,color,this,nombUsuario);
+		// Crear usuario
+		usuario = new UsuarioPanel(urlFoto, color, this, nombUsuario);
 
 		return usuario;
 	}
 
 	public void asignarEstado(String usuarioEstado, String estado, boolean borrarOtros) {
-		// comunicar estado a los demas para que actualicen
-		MensajeEstado me=new MensajeEstado(ConstPanel.MSJ_ESTADO_USUARIO,usuario);
+		// Comunicar estado a los demas para que actualicen
+		MensajeEstado me = new MensajeEstado(ConstPanel.MSJ_ESTADO_USUARIO, usuario);
 		me.setUsuarioEstado(usuarioEstado);
 		me.setEstado(estado);
 		me.setBorrarOtros(borrarOtros);
 		clienteCanal.enviar(me);
-		// procesar
-		procesarEstado(usuarioEstado,estado,borrarOtros);
+		// Procesar
+		procesarEstado(usuarioEstado, estado, borrarOtros);
 	}
 	
-	//Igual que el anterior pero para la etiqueta del estado Global
+	// Igual que el anterior pero para la etiqueta del estado Global
 	public void asignarEstadoGlobal(String usuarioEstado, String estado, boolean borrarOtros) {
-		// comunicar estado a los demas para que actualicen
-		MensajeEstado me = new MensajeEstado(ConstPanel.MSJ_ESTADOGLOBAL_USUARIO,usuario);
+		// Comunicar estado a los demas para que actualicen
+		MensajeEstado me = new MensajeEstado(ConstPanel.MSJ_ESTADOGLOBAL_USUARIO, usuario);
 		me.setUsuarioEstado(usuarioEstado);
 		me.setEstado(estado);
 		me.setBorrarOtros(borrarOtros);
 		clienteCanal.enviar(me);
-		// procesar
-		procesarEstadoGlobal(usuarioEstado,estado,borrarOtros);
+		// Procesar
+		procesarEstadoGlobal(usuarioEstado, estado, borrarOtros);
 	}
 
 	private void procesarEstado(String usuarioEstado, String estado, boolean borrarOtros) {
 		UsuarioPanel usPan;
 
 		for (int i=0; i<tabUsuarios.size(); i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
-			if (usPan!=null) {
-				if ((usPan.getNombre()).equals(usuarioEstado))
+			usPan = tabUsuarios.get(i);
+			if (usPan != null) {
+				if ((usPan.getNombre()).equals(usuarioEstado)) {
 					usPan.setEstado(estado);
-				else
+				} else {
 					if (borrarOtros)
 						usPan.setEstado("");
+				}
 			}
 		}
 		canvas.redraw();
@@ -430,24 +448,25 @@ public class PanelSesion extends ViewPart implements ICliente {
 		UsuarioPanel usPan;
 
 		for (int i=0; i<tabUsuarios.size(); i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
-			if (usPan!=null) {
-				if ((usPan.getNombre()).equals(usuarioEstado))
+			usPan = tabUsuarios.get(i);
+			if (usPan != null) {
+				if ((usPan.getNombre()).equals(usuarioEstado)) {
 					usPan.setEstadoGlobal(estado);
-				else
+				} else {
 					if(borrarOtros)
 						usPan.setEstadoGlobal("");
+				}
 			}
 		}
 		canvas.redraw();
 	}
 
 	public void asignarEstadoTodos(String estado) {
-		// comunicar estado a los demas para que actualicen
-		MensajeEstadoTodos met=new MensajeEstadoTodos(ConstPanel.MSJ_ESTADO_TODOS,usuario);
+		// Comunicar estado a los demas para que actualicen
+		MensajeEstadoTodos met = new MensajeEstadoTodos(ConstPanel.MSJ_ESTADO_TODOS, usuario);
 		met.setEstado(estado);
 		clienteCanal.enviar(met);
-		// procesar
+		// Procesar
 		procesarEstadoTodos(estado);
 	}
 
@@ -455,18 +474,18 @@ public class PanelSesion extends ViewPart implements ICliente {
 		UsuarioPanel usPan;
 
 		for (int i=0; i<tabUsuarios.size(); i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
+			usPan = tabUsuarios.get(i);
 			if (usPan != null)
 				usPan.setEstado(estado);
 		}
 		canvas.redraw();
 	}
-	//FGG 23/07/09 metodo para asiganr el estado global a todos
+	
 	private void procesarEstadoGlobalTodos(String estado) {
 		UsuarioPanel usPan;
 
 		for(int i=0; i<tabUsuarios.size(); i++) {
-			usPan = (UsuarioPanel)tabUsuarios.get(i);
+			usPan = tabUsuarios.get(i);
 			if (usPan != null)
 				usPan.setEstadoGlobal(estado);
 
@@ -474,11 +493,9 @@ public class PanelSesion extends ViewPart implements ICliente {
 		canvas.redraw();
 	}
 
-	public void cerrar() {
-		// Desconectar
-		if (clienteCanal != null){
-			// Comunicar salida a los demas para que eliminen al usuario
-			MensajePanel m = new MensajePanel(ConstPanel.MSJ_PANEL_SALIR,usuario);
+	public void cerrar() { // Desconectar
+		if (clienteCanal != null) { // Comunicar salida a los demas para que eliminen al usuario
+			MensajePanel m = new MensajePanel(ConstPanel.MSJ_PANEL_SALIR, usuario);
 			m.setUsuario(usuario);
 			clienteCanal.enviar(m);
 			clienteCanal.desconectarCanal();
@@ -493,11 +510,9 @@ public class PanelSesion extends ViewPart implements ICliente {
 	@Override
 	public void recibirDatos(byte[] message) {
 		ByteArrayInputStream bins = new ByteArrayInputStream(message);
-		// DataInputStream dins = new DataInputStream(bins);
 		try {
 			ObjectInputStream ois = new ObjectInputStream(bins);
 			final Mensaje m = (Mensaje) ois.readObject();
-			// Apply the tool to the local canvas.
 			Display.getDefault().asyncExec(new Runnable(){
 				@Override
 				public void run() {
@@ -513,7 +528,6 @@ public class PanelSesion extends ViewPart implements ICliente {
 		}
 	}
 
-	//JGA 01/12/2009 Getters y setters de las propiedades
 	public boolean isGrande() {
 		return grande;
 	}
@@ -527,8 +541,7 @@ public class PanelSesion extends ViewPart implements ICliente {
 		this.vertical = vertical;
 	}
 
-	//JGA 05/03/2010 Getter necesario para el manejo de los telepunteros
-	public Vector<UsuarioPanel> getTablaUsuarios(){
+	public Vector<UsuarioPanel> getTablaUsuarios() {
 		return tabUsuarios;
 	}
 }

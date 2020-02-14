@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name.0
-Bundle-SymbolicName: SpacEclipse;singleton:=true
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-SymbolicName: SPACEclipse;singleton:=true
+Bundle-Version: 2.0.1.SNAPSHOT
 Bundle-Activator: spaceclipse.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide;bundle-version="3.12.3",

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import spaceclipse.sincronizacion.Mensaje;
 
+@SuppressWarnings("serial")
 public class TelepointerMessage extends Mensaje implements Serializable {
 	protected int x;
 	protected int y;
