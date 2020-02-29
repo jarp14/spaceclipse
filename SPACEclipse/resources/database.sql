@@ -18,8 +18,8 @@
 -- Create schema `space`
 --
 
-CREATE DATABASE IF NOT EXISTS `space_example2`;
-USE `space_example2`;
+CREATE DATABASE IF NOT EXISTS `space`;
+USE `space`;
 
 --
 -- Definition of table `accesos`
@@ -92,7 +92,15 @@ CREATE TABLE `sesiones` (
 
 /*!40000 ALTER TABLE `sesiones` DISABLE KEYS */;
 INSERT INTO `sesiones` (`nombre`,`tipo`,`creador`,`fichero`,`privada`,`dia_inic`,`dia_final`,`hora_inic`,`hora_final`) VALUES 
- ('circuits','circuits','user1','Circuits/Circuits.circuitosdigitales_diagram',0,'00000101','99991231','00:00:00','23:59:59');
+ ('circuits','graphics','user1','/Diagrams/default.digital_diagram',0,'00000101','99991231','00:00:00','23:59:59');
+ INSERT INTO `sesiones` (`nombre`,`tipo`,`creador`,`fichero`,`privada`,`dia_inic`,`dia_final`,`hora_inic`,`hora_final`) VALUES 
+ ('usecases','graphics','user1','/Diagrams/default.usecases_diagram',0,'00000101','99991231','00:00:00','23:59:59');
+ INSERT INTO `sesiones` (`nombre`,`tipo`,`creador`,`fichero`,`privada`,`dia_inic`,`dia_final`,`hora_inic`,`hora_final`) VALUES 
+ ('java','code','user1','/Java/src/Fibonacci.java',0,'00000101','99991231','00:00:00','23:59:59');
+ INSERT INTO `sesiones` (`nombre`,`tipo`,`creador`,`fichero`,`privada`,`dia_inic`,`dia_final`,`hora_inic`,`hora_final`) VALUES 
+ ('manuscript','text','user1','/Manuscripts/src/Essay.txt',0,'00000101','99991231','00:00:00','23:59:59');
+ INSERT INTO `sesiones` (`nombre`,`tipo`,`creador`,`fichero`,`privada`,`dia_inic`,`dia_final`,`hora_inic`,`hora_final`) VALUES 
+ ('browser','web','user1',' ',0,'00000101','99991231','00:00:00','23:59:59');
 /*!40000 ALTER TABLE `sesiones` ENABLE KEYS */;
 
 
