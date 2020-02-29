@@ -9,7 +9,7 @@
 
 The database script is located @ spaceclipse/resources/database.sql<br/>It is necessary to change the DBName, DBUser & DBPassword in the properties file, located @ package spaceclipse/sincronizacion/issc_en.properties<br/>To launch an ECF Generic Server you must launch the server.bat located @ spaceclipse/resources/server.bat or run a new Eclipse configuration launching it as parameters
 
-##### 2. Steps to make a graphical editor collaborative
+##### 2. Steps to make a collaborative graphics editor
 
 1. Copy into workspace the graphical editor
 2. Copy into workspace the SpacEclipse plug-in
@@ -19,7 +19,7 @@ The database script is located @ spaceclipse/resources/database.sql<br/>It is ne
 6. Run the ECF generic server and database
 7. Run an instance of the SpacEclipse collaborative graphical editor
 
-##### 2. Steps to generate a text (code/manuscript) editor collaborative
+##### 2. Steps to generate a collaborative text (code/manuscript) editor
 
 1. Copy into workspace the SpacEclipse plug-in
 2. Select and configure the text editor using the Learn-CIAT tool
