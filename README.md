@@ -34,3 +34,6 @@ The database script is located @ spaceclipse/resources/database.sql<br/>It is ne
 3. Run the rules.egx pointing the Learn-CIAT diagram to transform and prepare a new SpacEclipse instance
 4. Run the ECF generic server and database
 5. Run an instance of the SpacEclipse collaborative web browser
+
+
+*Important Notes: To start a new learning session, you must make sure that the students have in their workspace the project and file (diagram/java/text) with the same path and name previously defined in the learning session by the professor*
