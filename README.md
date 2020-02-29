@@ -2,7 +2,7 @@
 
 ### Requirements:
 
-##### 1. DATABASE CONFIGURATION AND ECF GENERIC SERVER
+##### 1. DataBase & ECF Generic Server configuration
 
 - MySQL Workbench 6.X<br/>
 - MySQL Server 5.7.X
